@@ -5,6 +5,7 @@
 
 import os
 import sys
+import math
 
 import numpy as np
 from PIL import Image
@@ -33,21 +34,29 @@ def fromBinary(binMsg):
 
 
 def encodingFunction(imagePixels, message):
+    rows = len(imagePixels)
+    cols = len(imagePixels[0])
     for i in range(len(message)):
+        r = math.floor(i/cols)
+        c = i % cols
+
         bit = message[i]
-        imagePixels[i][0][0] = bit
+        imagePixels[r][c][0] = bit
+
     return imagePixels
 
 
 def decodingFunction(imagePixels):
     rows = len(imagePixels)
+    cols = len(imagePixels[0])
 
     differences = []
     for i in range(rows):
-        current = imagePixels[i][0][0]
-        if current > 1:
-            break
-        differences.append(str(current))
+        for j in range(cols):
+            current = imagePixels[i][j][0]
+            if current > 1:
+                break
+            differences.append(str(current))
 
     return ''.join(differences)
 
