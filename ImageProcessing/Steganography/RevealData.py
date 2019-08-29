@@ -4,7 +4,8 @@
 
 from Steganographer import decodeMessage
 
-inputPath = "messenger.png"  # save as PNG because JPG uses lossy compression
+# save as PNG to avoide lossy compression
+inputPath = input("Please enter the path for concealer image: ")
 
 with open('secretMsg.txt', 'w') as fout:
     fout.write(decodeMessage(inputPath))

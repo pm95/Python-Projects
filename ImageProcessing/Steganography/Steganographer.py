@@ -37,6 +37,9 @@ def fromBinary(binMsg):
     return ''.join(result)
 
 
+coordinates = []
+
+
 def encodingFunction(imagePixels, message, bands=3):
     rows = len(imagePixels)
     cols = len(imagePixels[0])
@@ -59,9 +62,9 @@ def decodingFunction(imagePixels, bands=3):
     rows = len(imagePixels)
     cols = len(imagePixels[0])
 
-    breakFlag = False
-
     messageBits = []
+
+    breakFlag = False
 
     for i in range(rows):
         if breakFlag:

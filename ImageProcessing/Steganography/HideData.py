@@ -6,7 +6,7 @@ from Steganographer import encodeMessage, loadImageToArray
 
 # Run main script logic here:
 # define input + output paths
-inputPath = "flowers.png"
+inputPath = input("Please enter path for concealer image: ")
 outputPath = "messenger.png"  # save as PNG because JPG uses lossy compression
 
 # define secret message
