@@ -13,7 +13,7 @@ from PIL import Image
 
 # basic function definitions
 def loadImageToArray(path):
-    return np.array(Image.open(path))
+    return np.array(Image.open(path).convert('RGBA'))
 
 
 def toBinary(message):
