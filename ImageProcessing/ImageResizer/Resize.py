@@ -52,9 +52,9 @@ class ImageResizer:
             print("no images found to re-size")
 
     def scanAndResize(self):
-        resizer.getOriginals()
-        resizer.getResized()
-        resizer.resizeImages()
+        self.getOriginals()
+        self.getResized()
+        self.resizeImages()
 
 
 newWidth = input("Enter a new width for the images: ")
