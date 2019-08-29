@@ -61,7 +61,7 @@ def decodingFunction(imagePixels, bands=3):
 
     breakFlag = False
 
-    differences = []
+    messageBits = []
 
     for i in range(rows):
         if breakFlag:
@@ -72,9 +72,9 @@ def decodingFunction(imagePixels, bands=3):
                 break
             for b in range(bands):
                 current = bin(imagePixels[i][j][b])[-1:]
-                differences.append(str(current))
+                messageBits.append(str(current))
 
-    return ''.join(differences)
+    return ''.join(messageBits)
 
 
 def encodeMessage(imagePixels, message, outputPath):
