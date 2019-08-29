@@ -37,16 +37,17 @@ def fromBinary(binMsg):
     return ''.join(result)
 
 
-def encodingFunction(imagePixels, message):
+def encodingFunction(imagePixels, message, bands=3):
     rows = len(imagePixels)
     cols = len(imagePixels[0])
     for i in range(len(message)):
-        r = math.floor(i/cols)
-        c = i % cols
+        r = math.floor(i/(bands * cols))
+        c = math.floor(i / bands) % cols
+        b = i % bands
 
-        imagePixels[r][c][0] = int(
+        imagePixels[r][c][b] = int(
             bin(
-                imagePixels[r][c][0]
+                imagePixels[r][c][b]
             )[2:-1] + message[i], 2)
 
         imagePixels[r][c][3] = 254
@@ -54,17 +55,24 @@ def encodingFunction(imagePixels, message):
     return imagePixels
 
 
-def decodingFunction(imagePixels):
+def decodingFunction(imagePixels, bands=3):
     rows = len(imagePixels)
     cols = len(imagePixels[0])
 
+    breakFlag = False
+
     differences = []
+
     for i in range(rows):
+        if breakFlag:
+            break
         for j in range(cols):
             if imagePixels[i][j][3] != 254:
+                breakFlag = True
                 break
-            current = bin(imagePixels[i][j][0])[-1:]
-            differences.append(str(current))
+            for b in range(bands):
+                current = bin(imagePixels[i][j][b])[-1:]
+                differences.append(str(current))
 
     return ''.join(differences)
 

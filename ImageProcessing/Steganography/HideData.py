@@ -443,6 +443,8 @@ by William Shakespeare
     Where I may not remove nor be removed.
 '''
 
+message = input("please enter a message here: ")
+
 # load file from disk
 imagePixels = loadImageToArray(inputPath)
 encodeMessage(imagePixels, message, outputPath)
