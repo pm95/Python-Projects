@@ -12,6 +12,10 @@ from PIL import Image
 
 
 # basic function definitions
+def loadImageToArray(path):
+    return np.array(Image.open(path))
+
+
 def toBinary(message):
     result = []
     for char in message:
@@ -40,8 +44,12 @@ def encodingFunction(imagePixels, message):
         r = math.floor(i/cols)
         c = i % cols
 
-        bit = message[i]
-        imagePixels[r][c][0] = bit
+        imagePixels[r][c][0] = int(
+            bin(
+                imagePixels[r][c][0]
+            )[2:-1] + message[i], 2)
+
+        imagePixels[r][c][3] = 254
 
     return imagePixels
 
@@ -53,15 +61,15 @@ def decodingFunction(imagePixels):
     differences = []
     for i in range(rows):
         for j in range(cols):
-            current = imagePixels[i][j][0]
-            if current > 1:
+            if imagePixels[i][j][3] != 254:
                 break
+            current = bin(imagePixels[i][j][0])[-1:]
             differences.append(str(current))
 
     return ''.join(differences)
 
 
-def encodeMessage(imagePixels, message):
+def encodeMessage(imagePixels, message, outputPath):
     message = toBinary(message)
     imagePixels = encodingFunction(imagePixels, message)
 
@@ -78,26 +86,12 @@ def encodeMessage(imagePixels, message):
 
 
 def decodeMessage(moddedImgPath):
-    modded = np.array(Image.open(moddedImgPath))
+    print("beginning message decoding step...")
+    modded = loadImageToArray(moddedImgPath)
 
     differences = decodingFunction(modded)
     hiddenMsg = fromBinary(differences)
 
+    print("finished message decoding step...")
+
     return hiddenMsg
-
-
-# define input + output paths
-inputPath = "flowers.png"
-outputPath = "messenger.png"  # save as PNG because JPG uses lossy compression
-
-
-# define secret message
-message = input("Please enter a message to hide: ")
-
-# load file from disk
-imagePixels = np.array(Image.open(inputPath))
-
-encodeMessage(imagePixels, message)
-
-with open('secretMsg.txt', 'w') as fout:
-    fout.write(decodeMessage(outputPath))
