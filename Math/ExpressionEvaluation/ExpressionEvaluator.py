@@ -90,8 +90,13 @@ expressions = {
     "32.6/3.2+90.7": 100.8875,
     "-1.5+6": 4.5,
     "19-27.2": -8.2,
-    "56+34+14+5.5": 109.5
+    "56+34+14+5.5": 109.5,
 }
 
 
-print(evalExpression("19-27.2"))
+for e in expressions:
+    calc = evalExpression(e)
+    real = expressions[e]
+
+    print("\nExpression:%s\nCalculated Value:%s\nReal Value:%s\n" %
+          (e, calc, real))
