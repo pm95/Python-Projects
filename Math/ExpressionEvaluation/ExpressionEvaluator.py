@@ -8,7 +8,18 @@ import re
 # Function Definitions
 def tokenizeExpression(expr):
     pattern = "([*| /| +| -])"
-    return re.split(pattern, expr)
+    expr = re.split(pattern, expr)
+
+    # takes care of wrongly-tokenized negative numbers
+    i = 0
+    while i < len(expr)-2:
+        if expr[i] == '' and expr[i+1] == '-':
+            expr[i+2] = str(-1 * float(expr[i+2]))
+            del expr[i+1]
+            del expr[i]
+        i += 1
+
+    return expr
 
 
 def evalStatement(a, b, op):
@@ -77,10 +88,10 @@ expressions = {
     "4*8": 32,
     "15/3": 5,
     "32.6/3.2+90.7": 100.8875,
-    # "-1.5+6": 4.5,
-    # "19-27.2": -8.2,
-    # "56+34+14+5.5": 109.5
+    "-1.5+6": 4.5,
+    "19-27.2": -8.2,
+    "56+34+14+5.5": 109.5
 }
 
-for e in expressions:
-    print(evalExpression(e))
+
+print(evalExpression("19-27.2"))
