@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.*;
 
+import org.graalvm.compiler.phases.graph.PostOrderNodeIterator;
+
 class ExpressionEvaluator {
 
     static ArrayList<String> tokenizeExpression(String expr) {
@@ -79,13 +81,20 @@ class ExpressionEvaluator {
         return expr;
     }
 
+    static double evaluate(String expr) {
+        ArrayList<String> tokenizedExpr = tokenizeExpression(expr);
+        ArrayList<String> postHigh = evalHighPrecedence(tokenizedExpr);
+        ArrayList<String> postLow = evalLowPrecedence(postHigh);
+        String result = postLow.get(0);
+        return Double.parseDouble(result);
+    }
+
     public static void main(String[] args) {
         String expr = "5+4*12-100+52/2";
 
-        ArrayList<String> tokenizedExpr = tokenizeExpression(expr);
+        double result = evaluate(expr);
 
-        ArrayList<String> postHigh = evalHighPrecedence(tokenizedExpr);
-        ArrayList<String> postLow = evalLowPrecedence(postHigh);
+        System.out.println(result);
 
     }
 }
