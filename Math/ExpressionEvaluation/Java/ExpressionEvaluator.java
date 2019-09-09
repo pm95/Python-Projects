@@ -55,8 +55,6 @@ class ExpressionEvaluator {
             }
             i++;
         }
-
-        System.out.println(expr);
         return expr;
     }
 
@@ -73,8 +71,6 @@ class ExpressionEvaluator {
             expr.remove(r);
             expr.remove(l);
         }
-
-        System.out.println(expr);
 
         return expr;
     }
@@ -94,11 +90,12 @@ class ExpressionEvaluator {
     }
 
     public static void main(String[] args) {
-        String expr = "5+4*12-100+52/2";
+        String[] exprs = { "5+4*12-100+52/2", "4+5", "9-23", "90/7+45" };
 
-        double result = evaluateExpression(expr);
-
-        System.out.println(result);
+        for (String expr : exprs) {
+            double result = evaluateExpression(expr);
+            System.out.println(result);
+        }
 
     }
 }
