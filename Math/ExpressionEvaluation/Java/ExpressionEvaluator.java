@@ -1,6 +1,6 @@
 // Author: Pietro Malky
 // Purpose: Java implementation of arithmetic expression evaluator
-// Date: 09/09/2019
+// Date: 09/10/2019
 
 import java.util.ArrayList;
 import java.util.Arrays;
