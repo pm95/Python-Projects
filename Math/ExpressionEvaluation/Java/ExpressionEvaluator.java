@@ -12,7 +12,7 @@ class ExpressionEvaluator {
     static ArrayList<String> fixNegativeVals(ArrayList<String> expr) {
         for (int i = 0; i < expr.size(); i++) {
             if (expr.get(i).equals("-")) {
-                if (i == 0 || expr.get(i - 1).matches("[*|/|+|-| ]")) {
+                if (i == 0 || expr.get(i - 1).matches("[*|/|+|-|^| ]")) {
                     double temp = -1 * Double.parseDouble(expr.get(i + 1));
                     expr.set(i + 1, String.valueOf(temp));
                     expr.remove(i);
