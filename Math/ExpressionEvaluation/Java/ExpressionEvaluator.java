@@ -113,13 +113,11 @@ class ExpressionEvaluator {
 
     public static void main(String[] args) {
         String[] exprs = { "5+4*12-100+52/2", "5 + 2", "6 - 3", "4 * 8", "15 / 3", "19 - 27.2", "55555*99999",
-                "1/10000000", "56 + 34+14+5.5", "17.23-6.46/3.23", "-1.5 + 6" };
+                "1/10000000", "56 + 34+14+5.5", "17.23-6.46/3.23", "-1.5 + 6", "-4.02+-8 * 32-67/-2" };
 
-        // for (String expr : exprs) {
-        // System.out.println(evaluateExpression(expr));
-        // }
-
-        System.out.println(evaluateExpression("-4.02+-8 * 32-67/-2"));
+        for (String expr : exprs) {
+            System.out.println(evaluateExpression(expr));
+        }
 
     }
 }
