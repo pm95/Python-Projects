@@ -2,12 +2,32 @@
 // Purpose: Java implementation of arithmetic expression evaluator
 // Date: 09/10/2019
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.regex.*;
 import java.math.*;
 
 class ExpressionEvaluator {
+
+    static String togglePosNeg(CharSequence screenContents) {
+        ArrayList<String> expr = tokenizeExpression(screenContents.toString());
+        System.out.println(expr);
+
+        int endIndex = expr.size() - 1;
+        String last = expr.get(endIndex);
+        boolean lastNotOp = !last.matches("[*|/|+|-|^| ]");
+
+        if (lastNotOp) {
+            String result = String.valueOf(-1 * Double.parseDouble(last));
+            expr.set(endIndex, result);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (String s : expr) {
+            sb.append(s);
+        }
+
+        return sb.toString();
+    }
 
     static ArrayList<String> fixNegativeVals(ArrayList<String> expr) {
         for (int i = 0; i < expr.size(); i++) {
@@ -118,11 +138,13 @@ class ExpressionEvaluator {
         String[] exprs = { "5+4*12-100+52/2", "5 + 2", "6 - 3", "4 * 8", "15 / 3", "19 - 27.2", "55555*99999",
                 "1/10000000", "56 + 34+14+5.5", "17.23-6.46/3.23", "-1.5 + 6", "-4.02+-8 * 32-67/-2" };
 
-        for (String expr : exprs) {
-            System.out.println(evaluateExpression(expr));
-        }
+        // for (String expr : exprs) {
+        // System.out.println(evaluateExpression(expr));
+        // }
 
-        System.out.println(evaluateExpression("2^3*2 + 6"));
+        // System.out.println(evaluateExpression("2^-3*2 + 6"));
+
+        togglePosNeg("-2 + 45 * 90");
 
     }
 }
