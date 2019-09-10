@@ -5,6 +5,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.*;
+import java.math.*;
 
 class ExpressionEvaluator {
 
@@ -23,7 +24,7 @@ class ExpressionEvaluator {
     }
 
     static ArrayList<String> tokenizeExpression(String expr) {
-        String pattern = "(?<=[-+*/])|(?=[-+*/])";
+        String pattern = "(?<=[-+*/^])|(?=[-+*/^])";
         String[] array = expr.split(pattern);
         ArrayList<String> result = new ArrayList<>(Arrays.asList(array));
 
@@ -57,6 +58,8 @@ class ExpressionEvaluator {
         case "-":
             result = A - B;
             break;
+        case "^":
+            result = Math.pow(A, B);
         }
         return String.valueOf(result);
     }
@@ -67,7 +70,7 @@ class ExpressionEvaluator {
             int l = i - 1;
             int r = i + 1;
 
-            if (expr.get(i).equals("*") || expr.get(i).equals("/")) {
+            if (expr.get(i).equals("*") || expr.get(i).equals("/") || expr.get(i).equals("^")) {
                 // Set eval's result in expr arraylist
                 expr.set(i, eval(expr.get(l), expr.get(r), expr.get(i)));
 
@@ -118,6 +121,8 @@ class ExpressionEvaluator {
         for (String expr : exprs) {
             System.out.println(evaluateExpression(expr));
         }
+
+        System.out.println(evaluateExpression("2^3*2 + 6"));
 
     }
 }
