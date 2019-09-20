@@ -29,7 +29,7 @@ def getClosestFactors(n):
     return closestFactors
 
 
-inPath = "../inputImages/editor.png"
+inPath = "../inputImages/petals.png"
 outPath = "../outputImages/petals.png"
 
 # define base width constant for new image
@@ -60,7 +60,8 @@ for row in imgArr:
 
 colors = len(colorPalette)
 cf = (*getClosestFactors(colors), 4)
-colorPalette = sorted(list(colorPalette))
+colorPalette = list(colorPalette)
+colorPalette = sorted(colorPalette, key=lambda x: sum(x)/len(x))
 
 newImg = np.array(colorPalette).reshape(cf)
 newImg = Image.fromarray(newImg)
