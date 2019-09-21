@@ -12,6 +12,7 @@ Create Pallette Image from Set object and save to disk
 '''
 
 import math
+import sys
 import numpy as np
 from PIL import Image
 from pprint import pprint
@@ -37,7 +38,7 @@ def distance(p1, p2):
     return math.sqrt(acc)
 
 
-inPath = "../inputImages/roads.png"
+inPath = "../inputImages/%s.png" % sys.argv[1]
 outPath = "../outputImages/palette.png"
 
 # define base width constant for new image
@@ -70,7 +71,7 @@ for row in imgArr:
 colors = len(colorPalette)
 cf = (*getClosestFactors(colors), 4)
 colorPalette = list(colorPalette)
-colorPalette = sorted(colorPalette, key=lambda c: sum(c)/len(c), reverse=True)
+colorPalette = sorted(colorPalette, key=lambda c: c, reverse=True)
 
 newImg = np.array(colorPalette).reshape((len(colorPalette), 1, 4))
 
