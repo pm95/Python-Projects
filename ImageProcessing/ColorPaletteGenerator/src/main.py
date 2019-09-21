@@ -11,7 +11,6 @@ Add colors to Set object and save Set to disk
 Create Pallette Image from Set object and save to disk
 '''
 
-import json
 import math
 import numpy as np
 from PIL import Image
