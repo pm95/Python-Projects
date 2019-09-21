@@ -11,26 +11,28 @@ Add colors to Set object and save Set to disk
 Create Pallette Image from Set object and save to disk
 '''
 
-import numpy as np
+import json
 import math
+import numpy as np
 from PIL import Image
+from pprint import pprint
 
 
 def getClosestFactors(n):
     factors = []
-    closestFactors = (99999999, 0)
     for i in range(1, int(n/2)+1):
         if n % i == 0:
             factors.append((i, int(n/i)))
 
+    closestFactors = (99999999, 0)
     for f in factors:
         if abs(f[0] - f[1]) < abs(closestFactors[0] - closestFactors[1]):
             closestFactors = f
     return closestFactors
 
 
-inPath = "../inputImages/petals.png"
-outPath = "../outputImages/petals.png"
+inPath = "../inputImages/roads.png"
+outPath = "../outputImages/palette.png"
 
 # define base width constant for new image
 BASE_WIDTH = 200
@@ -61,7 +63,8 @@ for row in imgArr:
 colors = len(colorPalette)
 cf = (*getClosestFactors(colors), 4)
 colorPalette = list(colorPalette)
-colorPalette = sorted(colorPalette, key=lambda x: sum(x)/len(x))
+colorPalette = sorted(colorPalette, key=lambda c: sum(c[:2])/3, reverse=True)
+
 
 newImg = np.array(colorPalette).reshape(cf)
 newImg = Image.fromarray(newImg)
