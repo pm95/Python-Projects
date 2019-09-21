@@ -31,21 +31,29 @@ def getClosestFactors(n):
     return closestFactors
 
 
+def distance(p1, p2):
+    acc = 0
+    for i in range(len(p1)):
+        acc += (p1[i]-p2[i])**2
+    return math.sqrt(acc)
+
+
 inPath = "../inputImages/roads.png"
 outPath = "../outputImages/palette.png"
 
 # define base width constant for new image
-BASE_WIDTH = 200
+NEW_WIDTH = 50
 
 # open input image
 img = Image.open(inPath)
 
 # calculate width percent and new height
-widthPercent = BASE_WIDTH/float(img.size[0])
-newHeight = int(float(img.size[1]*float(widthPercent)))
+widthPercent = NEW_WIDTH/float(img.size[0])
+# NEW_HEIGHT = int(float(img.size[1]*float(widthPercent)))
+NEW_HEIGHT = NEW_WIDTH
 
 # re-size image
-img = img.resize((BASE_WIDTH, newHeight), Image.ANTIALIAS)
+img = img.resize((NEW_WIDTH, NEW_HEIGHT), Image.ANTIALIAS)
 
 # declare colors set to hold palette
 colorPalette = set()
@@ -63,9 +71,13 @@ for row in imgArr:
 colors = len(colorPalette)
 cf = (*getClosestFactors(colors), 4)
 colorPalette = list(colorPalette)
-colorPalette = sorted(colorPalette, key=lambda c: sum(c[:2])/3, reverse=True)
+colorPalette = sorted(colorPalette, key=lambda c: sum(c)/len(c), reverse=True)
 
-
-newImg = np.array(colorPalette).reshape(cf)
+newImg = np.tile(
+    np.array(colorPalette).reshape(
+        (len(colorPalette), 1, 4)
+    ),
+    (len(colorPalette), 1)
+)
 newImg = Image.fromarray(newImg)
 newImg.save(outPath)
