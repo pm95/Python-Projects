@@ -31,13 +31,6 @@ def getClosestFactors(n):
     return closestFactors
 
 
-def distance(p1, p2):
-    acc = 0
-    for i in range(len(p1)):
-        acc += (p1[i]-p2[i])**2
-    return math.sqrt(acc)
-
-
 inPath = "../inputImages/%s.png" % sys.argv[1]
 outPath = "../outputImages/palette.png"
 
@@ -73,8 +66,22 @@ cf = (*getClosestFactors(colors), 4)
 colorPalette = list(colorPalette)
 colorPalette = sorted(colorPalette, key=lambda c: c, reverse=True)
 
-newImg = np.array(colorPalette).reshape((len(colorPalette), 1, 4))
+# # generate new image with ALL individual colors found
+# newImg = np.array(colorPalette).reshape((len(colorPalette), 1, 4))
+# newImg = np.tile(newImg, (len(colorPalette), 1))
+# newImg = Image.fromarray(newImg)
+# newImg.save(outPath)
 
-newImg = np.tile(newImg, (len(colorPalette), 1))
+
+# divide color palette list into specified number of segments
+segments = 8  # seems to be most reasonable segmentation value
+simplePalette = []
+for i in range(0, len(colorPalette), int(len(colorPalette)/segments)):
+    simplePalette.append(colorPalette[i])
+
+# create new image array and then image from array
+newImg = np.array(simplePalette).reshape(len(simplePalette), 1, 4)
+newImg = np.tile(newImg, (len(simplePalette), 1))
 newImg = Image.fromarray(newImg)
-newImg.save(outPath)
+newImg = newImg.resize((500, 500))
+newImg.save("../outputImages/simplepalette.png")
