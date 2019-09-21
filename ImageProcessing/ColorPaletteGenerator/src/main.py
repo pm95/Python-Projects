@@ -66,12 +66,6 @@ cf = (*getClosestFactors(colors), 4)
 colorPalette = list(colorPalette)
 colorPalette = sorted(colorPalette, key=lambda c: c, reverse=True)
 
-# # generate new image with ALL individual colors found
-# newImg = np.array(colorPalette).reshape((len(colorPalette), 1, 4))
-# newImg = np.tile(newImg, (len(colorPalette), 1))
-# newImg = Image.fromarray(newImg)
-# newImg.save(outPath)
-
 
 # divide color palette list into specified number of segments
 segments = 8  # seems to be most reasonable segmentation value
