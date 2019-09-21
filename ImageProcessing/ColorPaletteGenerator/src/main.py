@@ -5,7 +5,7 @@
 '''
 Ideas
 
-Resize Images to w*h = 200*h
+Resize input image
 Declare Set object to hold colors
 Add colors to Set object and save Set to disk
 Create Pallette Image from Set object and save to disk
@@ -72,11 +72,8 @@ cf = (*getClosestFactors(colors), 4)
 colorPalette = list(colorPalette)
 colorPalette = sorted(colorPalette, key=lambda c: sum(c)/len(c), reverse=True)
 
-newImg = np.tile(
-    np.array(colorPalette).reshape(
-        (len(colorPalette), 1, 4)
-    ),
-    (len(colorPalette), 1)
-)
+newImg = np.array(colorPalette).reshape((len(colorPalette), 1, 4))
+
+newImg = np.tile(newImg, (len(colorPalette), 1))
 newImg = Image.fromarray(newImg)
 newImg.save(outPath)
