@@ -31,8 +31,9 @@ def getClosestFactors(n):
     return closestFactors
 
 
-inPath = "../inputImages/%s.png" % sys.argv[1]
-outPath = "../outputImages/palette.png"
+name = sys.argv[1]
+inPath = "../inputImages/%s.png" % name
+outPath = "../outputImages/%s_palette.png" % name
 
 # define base width constant for new image
 NEW_WIDTH = 50
@@ -68,7 +69,7 @@ colorPalette = sorted(colorPalette, key=lambda c: c, reverse=True)
 
 
 # divide color palette list into specified number of segments
-segments = 8  # seems to be most reasonable segmentation value
+segments = 8  # 8 seems to be most reasonable segmentation value
 simplePalette = []
 for i in range(0, len(colorPalette), int(len(colorPalette)/segments)):
     simplePalette.append(colorPalette[i])
@@ -78,4 +79,4 @@ newImg = np.array(simplePalette).reshape(len(simplePalette), 1, 4)
 newImg = np.tile(newImg, (len(simplePalette), 1))
 newImg = Image.fromarray(newImg)
 newImg = newImg.resize((500, 500))
-newImg.save("../outputImages/simplepalette.png")
+newImg.save(outPath)
